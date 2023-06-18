@@ -1,0 +1,14 @@
+server:
+  port : 5000
+
+spring:
+  datasource:
+    url: jdbc:postgresql://db-odilo-assignment.cbmusoefacg9.us-east-1.rds.amazonaws.com:5432/initialdb
+    username: masterusername
+    password: masterpassword
+
+
+aws:
+  region: US-EAST-1
+  bucket-name: odilo-certificates
+

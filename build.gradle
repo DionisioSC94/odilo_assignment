@@ -1,0 +1,35 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.5.2'
+	id 'io.spring.dependency-management' version '1.1.0'
+	id 'org.flywaydb.flyway' version '6.4.3'
+
+	// Plugin to overcome the limitation in the number of entries. Resulted from having many dependencies
+//	id 'com.github.johnrengelman.shadow' version '7.0.0'
+
+
+}
+group = 'com.odilo-signingapp'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+targetCompatibility = 1.8
+repositories {
+	mavenCentral()
+}
+dependencies {
+
+
+	implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}"
+	implementation "org.thymeleaf:thymeleaf-spring5:${thymeleafVersion}"
+	implementation "software.amazon.awssdk:s3:${awsSdkVersion}"
+	implementation "com.amazonaws:aws-java-sdk:${awsJavaSdkVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
+	implementation "org.postgresql:postgresql:${postgresqlVersion}"
+	implementation "org.projectlombok:lombok:${lombokVersion}"
+	testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootTestVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
+}
+
+
