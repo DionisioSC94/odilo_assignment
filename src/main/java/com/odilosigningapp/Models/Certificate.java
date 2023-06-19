@@ -60,4 +60,7 @@ public class Certificate {
             String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
             this.password = hashedPassword;
     }
+    public String getPassword() {
+        return password;
+    }
 }

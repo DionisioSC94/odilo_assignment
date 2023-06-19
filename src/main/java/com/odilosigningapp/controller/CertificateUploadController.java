@@ -66,15 +66,17 @@ public class CertificateUploadController {
             // save in database
             certificateRepository.save(certificate);
 
+            //update model
+            model.addAttribute("certificate", certificate);
+
             // Save certificate in the S3 bucket
             //  s3Service.uploadFile(document, fileName);
 
             return "redirect:/personalpage";
         } catch (Exception e) {
-            e.printStackTrace();
             ResponseEntity response = ResponseEntity.badRequest().body(FAILED_UPLOAD);
             model.addAttribute("upload_reponse", response);
-            return "error";
+            return "redirect:/error";
         }
     }
 }
