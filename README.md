@@ -20,8 +20,7 @@ The application leverages the power of AWS Elastic Beanstalk for deployment, pro
 - Integration with AWS RDS for database storage
 - Integration with AWS S3 for secure document storage
 
-## Requirements
-
+## Requirements (SKIP) 
 To run the OdiloSigningApp locally or deploy it on AWS Elastic Beanstalk, ensure that you have the following requirements met:
 
 - Java 8 or higher installed
@@ -61,13 +60,31 @@ Contributions to OdiloSigningApp are welcome! If you have any bug reports, featu
 
 ## Future plans: multitenancy 
 The current implementation does not support multitenancy and lacks many security features to be used in real-life contexts. 
+
 #### Deficiencies:
 * Unit testing: for time constraints, no unit tests have been implemented so far. Junits tests should be implemented ensuring good coverage and gradle tasks should be configured to execute them. Moreover, this tasks should be executed before allowing merge of new codes as a form of regression testing (Jenkins pipeline for new PR)
 * Security: security practices should be more present. This applies at the level of architecture (for example, hosting the DB on prive subnets, using IAM-roles for database managements, limiting access to database from specific IP addresses etc), as well as the level of the code (e.g. implementing strong requirements for the passwords, currently not done)
+* Automate the versioning of the database to build new migration files which update the databse whenever changes in the corresponding in the models are introduced. Enforce checks on changes to ensure compatibility with existing data (e.g. not introducing new not nullable columns)
+* Introducing code good practices: use tools to enforce good coding style (e.g. SonarQube, CodenArc).
+* Create different builds based on the environment (mocking integrations to AWS services or using different endpoints of these) for easier local testing. 
+* Optimize architecture settings for better scalability and reliability (e.g. use of load balancers etc)
+* ...
+
+
+#### Moving to a multitenancy architecture
+The current architecture and code base would require significant changes to render the application suitable for multitenancy scenarios. 
+At architecture level, I think that moving the app to EKS would be the best approach, dedicating a namespace to each tenant to ensure tenancy-isolation. Probably, IAM-roles can be used to grant access to the different tenants to their corresponding namespaces. 
+This decision would require the application to be containerized using Docker. Subsequently, and EKS cluster should be deployed with appropriate security measures (creating a VPC and subnets, configuring network settings, and creating worker nodes to run your application containers etc.). 
+
+For the dabase, if the administration of the users is entirely delegated to the administrators of the tenants, we could completely isolate the database from each tenants, creating a database per tenants. Otherwise, we could create the entity "Tenant" and establish a one-to-many relationships with the user entity within the app. 
+
+Additionally, a control map for the SaaS provider (us) should be configured, which includes a frontend, backend logic, as well as a database, to manage the different tenants and onboard them. 
+
+As a final remark in this first high-level action plan, CI/CD pipelines should be configured to automate the deployment process when new tenants are to be onboarded. 
+
 ## License
 
-OdiloSigningApp is distributed under the [MIT License](https://opensource.org/licenses/MIT).
-
+----
 ---
 
 .
